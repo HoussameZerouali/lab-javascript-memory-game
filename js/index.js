@@ -27,8 +27,13 @@ const cards = [
 
 const memoryGame = new MemoryGame(cards);
 
+let pairsClickedElement = document.querySelector('#pairs-clicked');
+let pairsGuessedElement = document.querySelector('#pairs-guessed');
+
+
 window.addEventListener('load', (event) => {
   let html = '';
+  memoryGame.shuffleCards();
   memoryGame.cards.forEach((pic) => {
     html += `
       <div class="card" data-card-name="${pic.name}">
@@ -45,7 +50,62 @@ window.addEventListener('load', (event) => {
   document.querySelectorAll('.card').forEach((card) => {
     card.addEventListener('click', () => {
       // TODO: write some code here
+      if (memoryGame.pickedCards.length < 2) {
+        
+        card.classList.add("turned");
+        memoryGame.pickedCards.push(card.getAttribute("data-card-name"));
+      }
+      
+      if(memoryGame.checkIfPair(memoryGame.pickedCards[0],memoryGame.pickedCards[1])){
+        let flippedCards = document.querySelectorAll(".turned")
+        console.log(flippedCards)
+        flippedCards[0].classList.add("blocked")
+        flippedCards[1].classList.add("blocked")
+        setTimeout(() => {
+          memoryGame.pickedCards = [];
+          flippedCards = document.querySelectorAll(".turned") ;
+        }, 1000);
+        
+      }else if(memoryGame.pickedCards.length == 2){
+        let flippedCards = document.querySelectorAll(".turned")
+        setTimeout(() => {
+          flippedCards[0].classList.remove("turned")
+          flippedCards[1].classList.remove("turned")   
+          memoryGame.pickedCards = [];
+        }, 2000);
+                                                                     
+        
+        
+       }
+      
+       
+        
+        
+      
+        
+        
+      
+      
+      
+      console.log(memoryGame.pickedCards)
+      console.log(memoryGame.pairsGuessed)
+      console.log(memoryGame.pairsClicked)
+      
+      if (Number.isInteger(memoryGame.pairsClicked)){
+        pairsClickedElement.textContent = memoryGame.pairsClicked;
+      }
+      pairsGuessedElement.textContent = memoryGame.pairsGuessed;
       console.log(`Card clicked: ${card}`);
     });
+
+    
   });
+  if (memoryGame.checkIfFinished()){
+    console.log("you won")
+  }
+  
+  
 });
+
+// pairsClickedScore.text = memoryGame.pairsClicked;
+
