@@ -29,7 +29,7 @@ const memoryGame = new MemoryGame(cards);
 
 let pairsClickedElement = document.querySelector('#pairs-clicked');
 let pairsGuessedElement = document.querySelector('#pairs-guessed');
-
+let allCards = document.getElementsByClassName("card")
 
 window.addEventListener('load', (event) => {
   let html = '';
@@ -54,29 +54,54 @@ window.addEventListener('load', (event) => {
         
         card.classList.add("turned");
         memoryGame.pickedCards.push(card.getAttribute("data-card-name"));
+        
       }
       
-      if(memoryGame.checkIfPair(memoryGame.pickedCards[0],memoryGame.pickedCards[1])){
-        let flippedCards = document.querySelectorAll(".turned")
-        console.log(flippedCards)
+      let flippedCards = document.querySelectorAll(".turned")
+
+      if (memoryGame.checkIfPair(memoryGame.pickedCards[0],memoryGame.pickedCards[1])){
+        
         flippedCards[0].classList.add("blocked")
         flippedCards[1].classList.add("blocked")
-        setTimeout(() => {
-          memoryGame.pickedCards = [];
-          flippedCards = document.querySelectorAll(".turned") ;
-        }, 1000);
+        memoryGame.pickedCards = [];
+      }
+      
+
+
+      
+     setTimeout(() => {
+      for (let i = 0; i < allCards.length; i++) {
+        allCards[i].classList.remove("turned")
+      } 
+      memoryGame.pickedCards = [];
+     }, 1500);
+     
+     
+     
+     
+     
+     
+      // if(memoryGame.checkIfPair(memoryGame.pickedCards[0],memoryGame.pickedCards[1])){
         
-      }else if(memoryGame.pickedCards.length == 2){
-        let flippedCards = document.querySelectorAll(".turned")
-        setTimeout(() => {
-          flippedCards[0].classList.remove("turned")
-          flippedCards[1].classList.remove("turned")   
-          memoryGame.pickedCards = [];
-        }, 2000);
+      //   console.log(flippedCards)
+      //   flippedCards[0].classList.add("blocked")
+      //   flippedCards[1].classList.add("blocked")
+      //   setTimeout(() => {
+      //     memoryGame.pickedCards = [];
+      //     flippedCards = document.querySelectorAll(".turned") ;
+      //   }, 1000);
+        
+      // }else if(memoryGame.pickedCards.length == 2){
+      //   let flippedCards = document.querySelectorAll(".turned")
+      //   setTimeout(() => {
+      //     flippedCards[0].classList.remove("turned")
+      //     flippedCards[1].classList.remove("turned")   
+      //     memoryGame.pickedCards = [];
+      //   }, 2000);
                                                                      
         
         
-       }
+      //  }
       
        
         
